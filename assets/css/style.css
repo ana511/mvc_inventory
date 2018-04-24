@@ -1,0 +1,106 @@
+*{
+  margin : 0;
+  padding : 0;
+  box-sizing : border-box;
+}
+
+body{
+  font-family : sans-serif;
+}
+
+a{
+  color : #2398bb;
+  text-decoration : none;
+}
+
+header, main, footer{
+  padding : 30px;
+  border : 1px solid #eee;
+}
+
+header nav{
+  display : flex;
+  flex-wrap : wrap;
+}
+
+header nav a{
+  padding : 0 10px;
+}
+
+header nav a:first-child{
+  padding-left : 0;
+}
+
+main{
+  min-height : calc(100vh - 160px);
+}
+
+table{
+  border : 1px solid #ececec;
+  border-collapse: collapse;
+  margin-top : 30px;
+}
+
+td{
+  border : 1px solid #ececec;
+  padding : 10px;
+}
+
+.register, .signin, .dashboard{
+  display : flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+form{
+  display : flex;
+  flex-direction: column;
+  padding : 30px;
+  border : 1px solid #ddd;
+  border-radius : 10px;
+  margin-top : 30px;
+}
+
+form .field{
+  padding : 10px 0;
+  display : flex;
+}
+
+form .field label{
+  flex-grow : 1;
+}
+
+form .field input{
+  border : 1px solid #dcdcdc;
+  border-radius : 5px;
+  padding : 5px;
+  margin-left : 10px;
+}
+
+form > input{
+  padding : 10px 15px;
+  margin-top : 10px;
+  align-self : flex-end;
+  background-color : #2398bb;
+  border : none;
+  border-radius : 5px;
+  color : white;
+  font-weight : bold;
+}
+
+.dashboard table{
+  min-width : 50%;
+}
+
+.dashboard a{
+  align-self : flex-start;
+  margin-top : 30px;
+}
+
+.row{
+  display : flex;
+  flex-wrap : wrap;
+  justify-content: space-between;
+  width : 100%;
+}
