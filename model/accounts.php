@@ -57,10 +57,11 @@
       $isValid = SELF::validate($user);
 
       if($isValid){
-        $query_string = "INSERT INTO users(name, username, email, password) 
-        VALUES('{$user['name']}', '{$user['username']}', '{$user['email']}', '{$user['password']}')";
+        $query_string = "INSERT INTO users(name, username, email, password) VALUES( ? , ?, ?, ? )";
+        $statement = $mysqli->prepare($query_string);
+        $statement->bind_param("ssss", $user['name'], $user['username'], $user['email'], $user['password']);
 
-        if($mysqli->query($query_string) == true){
+        if($statement->execute() == true){
           return true;
         }
         return $mysqli->error;

@@ -3,6 +3,7 @@
 
   include 'model/products.php';
   include 'model/accounts.php';
+  include 'model/cart.php';
 
   if(!isset($_SESSION["token"]))
     $_SESSION["token"] = md5(uniqid(mt_rand(), true));
@@ -16,6 +17,7 @@
 
     switch($page){
       case 'home':
+        $products = Products::getAllProducts();
         include 'view/home.php';
         break;
 
@@ -35,6 +37,10 @@
         include 'controller/inventory.php';
         break;
 
+      case 'cart':
+        include 'controller/cart.php';
+        break;
+
       default : 
         break;
     }
@@ -42,7 +48,6 @@
   else{
     include 'view/home.php';
   }
-
 
   include 'view/footer.php';
 

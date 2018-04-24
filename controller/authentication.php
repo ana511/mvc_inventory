@@ -24,8 +24,13 @@
 
       case 'signin':
         if(isset($_SESSION['loggedin'])){
-          $products = Products::getAllProducts();
-          include 'view/dashboard.php';
+          if(Accounts::isAdmin() === true){
+            $products = Products::getAllProducts();
+            include 'view/dashboard.php';
+          }
+          else{
+            header('Location: index.php?page=home');
+          }
         }
         else{
           if(isset($_POST['form_submitted']) && $_POST['csrf'] === $_SESSION['token']){
@@ -57,7 +62,7 @@
           setcookie(session_name(),'',time() - 3600, '/');
         }
 
-        include 'view/signin.php';
+        header('Location: index.php?page=authentication&action=signin');
         break;
 
       default:

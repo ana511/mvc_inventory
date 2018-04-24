@@ -36,16 +36,14 @@
     static function getAllProducts(){
         global $mysqli;
 
-        if(isset($_SESSION['loggedin']) && Accounts::isAdmin() === true){
-          $query_string = "SELECT * FROM products";
-          $results = $mysqli->query($query_string);
+        $query_string = "SELECT * FROM products";
+        $results = $mysqli->query($query_string);
 
-          if ($results->num_rows > 0) {
-            return $results;
-          }
-          else{
-            return "an error occurred - no results";
-          }
+        if ($results->num_rows > 0) {
+          return $results;
+        }
+        else{
+          return "an error occurred - no results";
         }
           
         return "You must be logged in and possess admin access rights to see the inventory.";
