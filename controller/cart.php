@@ -9,11 +9,19 @@
           $result = Cart::addToCart($product_id);
         
           if($result === true){
-            echo "product added to cart successfully";
+            echo "product added to cart successfully " . $result;
           }
           else{
             echo "server error: " . $result;
           }
+        break;
+
+      case "view":
+        include "view/cart.php";
+        break;
+
+      case "checkout":
+        include "view/checkout.php";
         break;
 
       default:

@@ -13,9 +13,27 @@ a{
   text-decoration : none;
 }
 
+.btn{
+  padding : 10px 15px;
+  margin-top : 10px;
+  align-self : flex-end;
+  background-color : #2398bb;
+  border : none;
+  border-radius : 5px;
+  color : white;
+  font-weight : bold;
+}
+
 header, main, footer{
   padding : 30px;
   border : 1px solid #eee;
+}
+
+header{
+  display : flex;
+  flex-wrap : wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header nav{
@@ -41,7 +59,7 @@ table{
   margin-top : 30px;
 }
 
-td{
+td, th{
   border : 1px solid #ececec;
   padding : 10px;
 }
@@ -78,17 +96,6 @@ form .field input{
   margin-left : 10px;
 }
 
-form > input{
-  padding : 10px 15px;
-  margin-top : 10px;
-  align-self : flex-end;
-  background-color : #2398bb;
-  border : none;
-  border-radius : 5px;
-  color : white;
-  font-weight : bold;
-}
-
 .dashboard table{
   min-width : 50%;
 }
@@ -110,10 +117,62 @@ form > input{
   flex-wrap : wrap;
 }
 
-.home .products_list div{
+.home .products_list > div{
   border : 1px solid #ececec;
   padding : 30px 10px;
   flex-grow : 1;
   display : flex;
   flex-direction: column;
+  margin : 10px;
+}
+
+.home .products_list .prod_img{
+  max-width : 100px;
+}
+
+.home .products_list .prod_img img{
+  max-width : 100%;
+}
+
+.home .products_list > div a{
+  margin-top : 15px;
+}
+
+.cart{
+  display : flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart table{
+  min-width : 70%;
+}
+
+.cart table th,
+.cart table td{
+  text-align : right;
+  border : 1px solid #ccc;
+}
+
+.cart table tbody tr:nth-child(odd){
+  background-color : #efefef;
+}
+
+.cart table thead tr th:first-child,
+.cart table thead tr th:nth-child(2),
+.cart table tr td:first-child,
+.cart table tr td:nth-child(2){
+  text-align: center;
+}
+
+.cart table tr:last-child td:nth-child(2){
+  text-align : right;
+}
+
+.cart > a{
+  align-self: flex-end;
+  margin-right : 15%;
+  margin-top : 15px;
+  background-color : ;
 }

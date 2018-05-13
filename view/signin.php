@@ -12,6 +12,6 @@
     <div>
       <input type="hidden" name="csrf" value="<?php echo $_SESSION['token']?>">
     </div>
-    <input type="submit" name="form_submitted">
+    <input class="btn" type="submit" name="form_submitted">
   </form>
 </div>

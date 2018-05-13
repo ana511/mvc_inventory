@@ -8,8 +8,10 @@
           $result = SELF::validate($product);
 
           if($result === true){
-            $query_string = "INSERT INTO products(name, price, manufacturer, stock) VALUES ('{$product['name']}', {$product['price']}, '{$product['manufacturer']}', {$product['stock']})";
-            $db_result = $mysqli->query($query_string);
+            $query_string = "INSERT INTO products(name, price, manufacturer, stock) VALUES (?, ?, ?, ?)";
+            $statement = $mysqli->prepare($query_string);
+            $statement->bind_param("sfsi", $product['name'], $product['price'], $product['manufacturer'], $product['stock']);
+            $db_result = $statement->execute();
             return $db_result;
           }
           else{
@@ -22,15 +24,47 @@
     }
 
     static function removeProduct($product_id){
-      
+      global $mysqli;
+
+      if(isset($_SESSION['loggedin']) && Accounts::isAdmin() === true){
+        $query_string = "DELETE FROM products WHERE id=?";
+        $statement = $mysqli->prepare($query_string);
+        $statement->bind_param($product_id);
+
+        if($statement->execute() == true)
+          return true;
+        else
+          return "an error occurred: " . $mysqli->error;
+      }
+      else{
+        return "access denied";
+      }
     }
 
     static function updateProduct($product_id){
+      global $mysqli;
 
+      if(isset($_SESSION['loggedin']) && Accounts::isAdmin() === true){
+
+      }
+      else{
+        return "access denied";
+      }
     }
 
     static function getProduct($product_id){
+      global $mysqli;
 
+      $id = intval($product_id);
+      $query_string = "SELECT * FROM products WHERE id=$id";
+      $result = $mysqli->query($query_string);
+
+      if($result->num_rows > 0){
+        return $result->fetch_assoc();
+      }
+      else{
+        return "not found";
+      }
     }
 
     static function getAllProducts(){

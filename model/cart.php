@@ -1,44 +1,58 @@
 <?php
 
   class Cart{
+    private function add(){
+
+    }
+
     static function addToCart($product_id){
-      global $mysqli;
-
       $product_id = SELF::sanitize();
-      $result = SELF::validate($product_id);
-
-      if($result === true){
-        $query_string = "SELECT * FROM products WHERE id='{$product_id}'";
-        $db_res = $mysqli->query($query_string);
-
-        if($db_res->num_rows > 0){
-          $product = $db_res->fetch_assoc();
-
-          //if CART already exists
-          if(isset($_SESSION['cart'])){
-            //increment product's quantity to Shopping list
+      $isValid = SELF::validate($product_id);
+      
+      if($isValid === true){
+        if(isset($_SESSION['cart'])){
+          if(isset($_SESSION['cart']['products'][$product_id])){
             $_SESSION['cart']['products'][$product_id]['qty']++;
+            $_SESSION['cart']['total'] += $_SESSION['cart']['products'][$product_id]['price'] * $_SESSION['cart']['products'][$product_id]['qty'];
+            $_SESSION['cart']['numItems']++;
+
+            return true;
           }
-          //CART does not exist
           else{
-            $prod = array(
-              "name" => $product['name'],
-              "price" => $product['price'],
-              "qty" => 1,
-              "id" => $product['id']
-            );
+            $product = Products::getProduct($product_id);
 
-            array_push($_SESSION['cart']['products'], $prod);
+            if(gettype($product) !== 'string'){
+              $product['qty'] = 1;
+              array_push($_SESSION['cart']['products'], $product);
+              $_SESSION['cart']['total'] += $product['price'] * $product['qty'];
+              $_SESSION['cart']['numItems']++;
 
+              return true;
+            }
+            else{
+              return "unable to find product in db";
+            }
           }
         }
-        return $mysqli->error;
+        else{
+          $product = Products::getProduct($product_id);
+
+          if(gettype($product) !== 'string'){
+            $product['qty'] = 1;
+            $_SESSION['cart']['products'] = array($product['id'] => $product);
+            $_SESSION['cart']['total'] = $product['price'];
+            $_SESSION['cart']['numItems'] = 1;
+
+            return true;
+          }
+          else{
+            return "unable to find product in db";
+          }
+        }
       }
       else{
-        return "invalid product id";
+        return "invalid data";
       }
-
-      return true;
     }
 
     static function removeCart(){

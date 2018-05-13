@@ -24,7 +24,7 @@
     <div>
       <input type="hidden" name="csrf" value="<?php echo $_SESSION['token']?>">
     </div>
-    <input type="submit" name="form_submitted">
+    <input class="btn" type="submit" name="form_submitted">
   </form>
   <p>
     If you already have an account, click <a href="index.php?page=authentication&action=signin">here</a>

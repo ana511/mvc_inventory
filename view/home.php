@@ -12,10 +12,9 @@
 
       while($product = $products->fetch_assoc()) {
         echo "<div>";
+          echo "<div class='prod_img'><img src='{$product['image']}'/></div>";
           echo "<span>name: {$product['name']}</span>";
-          echo "<span>price:{$product['price']}</span>";
-          echo "<span>manufacturer: {$product['manufacturer']}</span>";
-          echo "<span>stock: {$product['stock']}</span>";
+          echo "<span>price:$" . "{$product['price']}</span>";
 
           if(isset($_SESSION['loggedin'])){
             echo "<a href='#' data-product-id='{$product['id']}'>Add to cart</a>";
@@ -30,9 +29,5 @@
       echo "Unable to retrieve products: " . $products; 
     }
 
-
-    if(isset($_SESSION['cart'])){
-      var_dump($_SESSION['cart']['products']);
-    }
   ?>
 </div>

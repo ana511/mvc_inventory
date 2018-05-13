@@ -4,12 +4,12 @@
   include 'model/products.php';
   include 'model/accounts.php';
   include 'model/cart.php';
+  include "model/connect.php";
+  include 'view/header.php';
 
   if(!isset($_SESSION["token"]))
     $_SESSION["token"] = md5(uniqid(mt_rand(), true));
 
-  include "model/connect.php";
-  include 'view/header.php';
 
 
   if(isset($_GET['page'])){

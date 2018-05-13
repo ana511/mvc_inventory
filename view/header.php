@@ -25,7 +25,7 @@
     <?php 
 
       if(isset($_SESSION['cart'])){
-        echo "<span style='float:right;'>cart icon</span>";
+        echo "<a href='index.php?page=cart&action=view' style='float:right;'>cart icon</a>";
       }
     ?>
 

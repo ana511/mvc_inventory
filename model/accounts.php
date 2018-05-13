@@ -57,6 +57,7 @@
       $isValid = SELF::validate($user);
 
       if($isValid){
+        // $user['password'] = md5($user['password']);
         $query_string = "INSERT INTO users(name, username, email, password) VALUES( ? , ?, ?, ? )";
         $statement = $mysqli->prepare($query_string);
         $statement->bind_param("ssss", $user['name'], $user['username'], $user['email'], $user['password']);
@@ -77,9 +78,11 @@
       $isValid = SELF::validate($user);
 
       if($isValid === true){
-        $query_string = "SELECT * FROM users WHERE username={$user['username']} AND password={$user['password']}";
+        $query_string = "SELECT * FROM users WHERE username=? AND password=?";
+        $statement = $mysqli->prepare($query_string);
+        $statement->bind_param("ss", $user['name'], $user['password']);
 
-        $result = $mysqli->query($query_string);
+        $result = $statement->execute();
 
         if($result->num_rows > 0){
           return true;
@@ -133,9 +136,11 @@
       global $mysqli;
 
       if(SELF::isAdmin()){
-        $query_string = "DELETE FROM users WHERE username={$_SESSION['username']}";
+        $query_string = "DELETE FROM users WHERE username=?";
+        $statement = $mysqli->prepare($query_string);
+        $statement->bind_param("s", $_SESSION['username']);
 
-        if($mysqli->query($query_string) == true)
+        if($statement->execute() == true)
           return true;
         else
           return "an error occurred: " . $mysqli->error;
@@ -148,14 +153,17 @@
       global $mysqli;
 
       $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'unknown';
+      $role = 'admin';
 
-      $query_string = "SELECT role FROM users WHERE username='{$username}' AND role='admin'";
-      $result = $mysqli->query($query_string);
+      $query_string = "SELECT role FROM users WHERE username=? AND role=?";
+      $statement = $mysqli->prepare($query_string);
+      $statement->bind_param("ss", $username, $role);
+      $result = $statement->execute();
 
       if($result->num_rows > 0)
-          return true;
-        else
-          return "an error occurred: " . $mysqli->error;
+        return true;
+      else
+        return "an error occurred: " . $mysqli->error;
     }
   }
 ?>
